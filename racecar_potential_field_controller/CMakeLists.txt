@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 find_package(Eigen REQUIRED)
 
 generate_dynamic_reconfigure_options(
-  cfg/RacecarPotentialFieldController.cfg
+  config/RacecarPotentialFieldController.cfg
 )
 
 catkin_package(
