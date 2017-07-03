@@ -92,7 +92,7 @@ void Controller::scanCallback(const sensor_msgs::LaserScan::ConstPtr& scan)
   Eigen::ArrayXf ranges(idx_end - idx_begin);
   std::copy(scan->ranges.begin() + idx_begin, scan->ranges.begin() + idx_end, ranges.data());
 
-  // convert scan index to anlges
+  // convert scan index to angles
   Eigen::ArrayXf angles(Eigen::ArrayXf::LinSpaced(idx_end - idx_begin,
       scan->angle_min + idx_begin * scan->angle_increment,
       scan->angle_min + (idx_end - 1) * scan->angle_increment));
@@ -119,6 +119,10 @@ void Controller::scanCallback(const sensor_msgs::LaserScan::ConstPtr& scan)
     last_cmd_.drive.speed *= -1;
   last_cmd_.drive.steering_angle = steering_p_gain_ * force_angle +
     steering_d_gain_ * (force_angle - force_angle_last_);
+
+  // set force_angle_last_ for use in derivative term on next iteration
+  // (note: there are better approximations for derivative)
+  force_angle_last_ = force_angle;
 
   // visualization of "forces"
   visualization_msgs::MarkerArray::Ptr viz(new visualization_msgs::MarkerArray);
