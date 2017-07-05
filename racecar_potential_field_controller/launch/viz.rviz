@@ -107,7 +107,7 @@ Visualization Manager:
       Color: 25; 255; 0
       Enabled: true
       Name: Polygon
-      Topic: /footprint
+      Topic: /vehicle_geometry/footprint
       Unreliable: false
       Value: true
   Enabled: true
