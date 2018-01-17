@@ -1,0 +1,29 @@
+#max performans için
+#Pencere aç
+sudo nvpmodel -m 2
+sudo ~/jetson_clocks.sh
+#Performans takibi için
+sudo ~/tegrastats
+
+#Josticki açın. Titreşim tuşunu kullanarak kontrol edebilirsiniz.
+#Pencere aç
+sudo mv /dev/input/js1 /dev/input/js0
+cd racecar-ws
+source devel/setup.bash
+roslaunch racecar teleop.launch
+
+
+#Pencere aç
+cd racecar-ws
+source devel/setup.bash
+rosrun deep_learning collect_data.py
+
+#Otonom sürüş için
+rosrun deep_learning predict.py
+
+#Terminalde aşağıdaki komutu çalıştırın
+ps -ef | grep predict.py
+#yandaki programın idsini aşağıdaki 8695 yerine yazın ve çalıştırın. /home/nvidia/racecar-ws/src/racecar-controllers/deep_learning/scripts/predict.py
+kill -9 8695
+
+
